@@ -56,7 +56,7 @@ class Sport(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
 
-class Skills(models.Model):
+class Skill(models.Model):
     id = models.AutoField(primary_key=True)
     description = models.CharField(max_length=50)
     sport = models.ForeignKey(Sport, on_delete=models.CASCADE, related_name='skills_sport')
@@ -71,13 +71,13 @@ class Player(models.Model):
     last_name = models.CharField(max_length=15)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE , related_name='player')
     sport = models.ManyToManyField(Sport)
-    skills = models.ManyToManyField(Skills)
+    skills = models.ManyToManyField(Skill)
     
 
 class SkillRating(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='ratings') #Related_name es para despues poder hacer user.ratings
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='ratings')
-    skill = models.ForeignKey(Skills, on_delete=models.CASCADE, related_name='ratings')
+    skill = models.ForeignKey(Skill, on_delete=models.CASCADE, related_name='ratings')
     
 
     

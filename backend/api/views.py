@@ -100,3 +100,21 @@ class GetPlayersByUserView(generics.ListAPIView):
     def get_queryset(self):
         userReq = self.request.user
         return Player.objects.filter(user = userReq)
+    
+class getSportsView(generics.ListAPIView):
+    queryset = Sport.objects.all()
+    serializer_class = SportSerializer    
+    ##permission_classes  = [IsAuthenticated]
+    permission_classes = [AllowAny] #Habilitado para pruebas
+
+class GetSkillsBySport(generics.ListAPIView):
+    serializer_class = SkillSerializer
+    ##permission_classes  = [IsAuthenticated]
+    permission_classes = [AllowAny] #Habilitado para pruebas
+
+    def get_queryset(self):
+        user = self.request.user
+        player = user.player
+        return player.skills
+
+

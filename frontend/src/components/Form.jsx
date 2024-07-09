@@ -24,10 +24,8 @@ function Form({ route, method }) {
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, resp.data.access);
         localStorage.setItem(REFRESH_TOKEN, resp.data.fresh);
-        console.log("pasaste por el if");
         navigate("/");
       } else { 
-        console.log("pasaste por el else");
         navigate("/login");
       }
     } catch (error) {
