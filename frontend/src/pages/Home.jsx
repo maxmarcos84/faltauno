@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { Component, useState } from "react"
 import api from "../api"
+import Form from "../components/FormPlayer"
 
 function Home() {
 
@@ -13,7 +14,12 @@ function Home() {
         })
         .catch((err)=> alert(err));
     }
-    return <div>Home</div>
+    return (
+        <>
+        <div>Home</div>
+        <Form></Form>
+        </>    
+    )
 }
 
 export default Home
