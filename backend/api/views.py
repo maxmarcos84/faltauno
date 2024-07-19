@@ -94,12 +94,14 @@ class CreatePlayerView(generics.CreateAPIView):
 
 class GetPlayersByUserView(generics.ListAPIView):
     serializer_class = PlayerSerializer
+    
     ##permission_classes  = [IsAuthenticated]
     permission_classes = [AllowAny] #Habilitado para pruebas
 
     def get_queryset(self):
-        userReq = self.request.user
-        return Player.objects.filter(user = userReq)
+        return Player.objects.filter(user = self.request.query_params.get('user_id'))
+    
+    
     
 class getSportsView(generics.ListAPIView):
     queryset = Sport.objects.all()

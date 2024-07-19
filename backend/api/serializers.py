@@ -52,13 +52,20 @@ class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
         fields = ['id', 'description', 'sport', 'rating']
-        extra_kwargs = {'sport': {'write_only': True}}
+        #extra_kwargs = {'sport': {'write_only': True}}
 
 class PlayerSerializer(serializers.ModelSerializer):
+    #user = CustomUserSerializer()
+
     class Meta:
         model = Player
         fields = ['id', 'first_name', 'last_name', 'user']
         extra_kwargs ={'user': {'write_only':True }}
+
+    """def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        player = Player.objects.create(user = user_data, **validated_data)
+        return player """
 
 ##class SkillSerializer(serializers.ModelSerializer):
      
