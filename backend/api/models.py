@@ -56,13 +56,16 @@ class Sport(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
+
 class Skill(models.Model):
     id = models.AutoField(primary_key=True)
     description = models.CharField(max_length=50)
-    sport = models.ForeignKey(Sport, on_delete=models.CASCADE, related_name='skills_sport')
-    rating = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(5)], default=1
-    )
+    sport = models.ForeignKey(Sport, on_delete=models.CASCADE, related_name='skills_sport')   
+
+    def __str__(self):
+        return self.name
 
 
 class Player(models.Model):
@@ -75,9 +78,11 @@ class Player(models.Model):
     
 
 class SkillRating(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='ratings') #Related_name es para despues poder hacer user.ratings
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='ratings')
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE, related_name='ratings')
+    rating = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)], default=1
+    )
     
 
     

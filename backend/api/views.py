@@ -94,7 +94,6 @@ class CreatePlayerView(generics.CreateAPIView):
 
 class GetPlayersByUserView(generics.ListAPIView):
     serializer_class = PlayerSerializer
-    
     ##permission_classes  = [IsAuthenticated]
     permission_classes = [AllowAny] #Habilitado para pruebas
 
