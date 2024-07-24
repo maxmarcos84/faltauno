@@ -61,7 +61,7 @@ class Sport(models.Model):
 
 class Skill(models.Model):
     id = models.AutoField(primary_key=True)
-    description = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     sport = models.ForeignKey(Sport, on_delete=models.CASCADE, related_name='skills_sport')   
 
     def __str__(self):
@@ -72,9 +72,9 @@ class Player(models.Model):
     id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=15)
     last_name = models.CharField(max_length=15)
+    nick_name = models.CharField(max_length=40, default="")
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE , related_name='player')
-    sport = models.ManyToManyField(Sport)
-    skills = models.ManyToManyField(Skill)
+    sport = models.ManyToManyField(Sport)    
     
 
 class SkillRating(models.Model):
@@ -83,7 +83,8 @@ class SkillRating(models.Model):
     rating = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)], default=1
     )
-    
+    rating_times = models.BigIntegerField(default=0)
+    current_average = models.DecimalField(max_digits=2, decimal_places=1, default=0.0)
 
     
 

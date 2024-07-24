@@ -98,7 +98,7 @@ class GetPlayersByUserView(generics.ListAPIView):
     permission_classes = [AllowAny] #Habilitado para pruebas
 
     def get_queryset(self):
-        return Player.objects.filter(user = self.request.query_params.get('user_id'))
+        return Player.objects.filter(user = self.kwargs['user_id'])
     
     
     

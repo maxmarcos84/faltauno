@@ -59,7 +59,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ['id', 'first_name', 'last_name', 'user']
+        fields = ['id', 'first_name', 'last_name', 'user', 'sport']
         extra_kwargs ={'user': {'write_only':True }}
 
     """def create(self, validated_data):
