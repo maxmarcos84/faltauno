@@ -78,6 +78,7 @@ class Player(models.Model):
     
 
 class SkillRating(models.Model):
+    id = models.AutoField(primary_key=True)
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='ratings')
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE, related_name='ratings')
     rating = models.PositiveSmallIntegerField(

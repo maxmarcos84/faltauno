@@ -51,8 +51,17 @@ class SportSerializer(serializers.ModelSerializer):
 class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
-        fields = ['id', 'description', 'sport', 'rating']
+        fields = ['id', 'name', 'sport']
         #extra_kwargs = {'sport': {'write_only': True}}
+
+class SkillRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SkillRating
+        field = ['id', 'player', 'skill', 'rating', 'rating_times', 'current_average']
+        extra_kwards = {
+            'rating_times' : {'read_only' : True},
+            'current_average' : {'read_only' : True}
+        }
 
 class PlayerSerializer(serializers.ModelSerializer):
     #user = CustomUserSerializer()

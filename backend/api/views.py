@@ -90,8 +90,12 @@ class CreatePlayerView(generics.CreateAPIView):
     #permission_classes = [IsAuthenticated]
     permission_classes = [AllowAny] #Habilitado para pruebas
 
-   
+class SkillsRatingView(generics.CreateAPIView):
+    #Create Serializer for skill_rating
+    #Check if Skills + player exist. If doesn't create if does update
+    pass
 
+   
 class GetPlayersByUserView(generics.ListAPIView):
     serializer_class = PlayerSerializer
     ##permission_classes  = [IsAuthenticated]
@@ -99,7 +103,6 @@ class GetPlayersByUserView(generics.ListAPIView):
 
     def get_queryset(self):
         return Player.objects.filter(user = self.kwargs['user_id'])
-    
     
     
 class getSportsView(generics.ListAPIView):
@@ -114,8 +117,6 @@ class GetSkillsBySport(generics.ListAPIView):
     permission_classes = [AllowAny] #Habilitado para pruebas
 
     def get_queryset(self):
-        user = self.request.user
-        player = user.player
-        return player.skills
+        return Skill.objects.filter(sport = self.kwargs['sport_id'])
 
 
