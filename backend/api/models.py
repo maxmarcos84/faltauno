@@ -81,8 +81,10 @@ class SkillRating(models.Model):
     id = models.AutoField(primary_key=True)
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='ratings')
     skill = models.ForeignKey(Skill, on_delete=models.CASCADE, related_name='ratings')
-    like = models.BigIntegerField(default=0)
-    dislike = models.BigIntegerField(default=0)
+    like_count = models.BigIntegerField(default=0)
+    dislike_count = models.BigIntegerField(default=0)
+    like = models.BooleanField(default= True)
+    dislike = models.BooleanField(default=False)
     
 
     

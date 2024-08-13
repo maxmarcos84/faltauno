@@ -90,11 +90,20 @@ class CreatePlayerView(generics.CreateAPIView):
     #permission_classes = [IsAuthenticated]
     permission_classes = [AllowAny] #Habilitado para pruebas
 
-class SkillsRatingView(generics.CreateAPIView):
-    #Create Serializer for skill_rating
-    #Check if Skills + player exist. If doesn't create if does update
+class UpdatePlayerView(generics.UpdateAPIView):
+    serializer_class = PlayerSerializer
+    queryset = Player.objects.all()
+    permission_classes = [AllowAny] #Habilitado para pruebas
+
+
+class SkillsRatingCreateView(generics.CreateAPIView):
+    serializer_class = SkillRatingSerializer
+    #permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny] #Habilitado para pruebas
     pass
 
+class SkillRatingUpdateView(generics.UpdateAPIView):
+    serializer_class = SkillRatingSerializer
    
 class GetPlayersByUserView(generics.ListAPIView):
     serializer_class = PlayerSerializer
