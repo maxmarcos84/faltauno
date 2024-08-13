@@ -35,3 +35,4 @@ ENV/
 env.bak/ 
 venv.bak/ 
 
+backend/db.sqlite3
