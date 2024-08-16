@@ -104,6 +104,24 @@ class SkillsRatingCreateView(generics.CreateAPIView):
 
 class SkillRatingUpdateView(generics.UpdateAPIView):
     serializer_class = SkillRatingSerializer
+    queryset = SkillRating.objects.all()
+    permission_classes = [AllowAny] #Habilitado para pruebas
+
+    def get_object(self):
+        obj = SkillRating.objects.get(pk=self.kwargs['pk'])
+        self.check_object_permissions(self.request, obj)
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.like:
+            instance.like_count += 1
+        if instance.dislike:
+            instance.dislike_count += 1
+        instance.save()
+        return super().update(request, *args, **kwargs)
+    
+    
    
 class GetPlayersByUserView(generics.ListAPIView):
     serializer_class = PlayerSerializer

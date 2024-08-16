@@ -14,7 +14,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         }
 
     ##Creo que esto que sigue no se esta usando, esto se valida en el modelo directamente
-    ##Chequear cuando este aburrido
+    ##Chequear cuando este aburrido 
     def validate_email(self, value):
         if CustomUser.objects.filter(email=value).exists():
             raise serializers.ValidationError("Este email ya está en uso.")
@@ -59,8 +59,8 @@ class SkillSerializer(serializers.ModelSerializer):
 class SkillRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = SkillRating
-        field = ['id', 'player', 'skill', 'like_count', 'dislike_count', 'like', 'dislike']
-        extra_kwards = {
+        fields = ['id', 'player', 'skill', 'like_count', 'dislike_count', 'like', 'dislike']
+        extra_kwargs = {
             'like_count' : {'read_only' : True},
             'dislike_count' : {'read_only' : True}
         }

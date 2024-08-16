@@ -75,6 +75,10 @@ class Player(models.Model):
     nick_name = models.CharField(max_length=40, default="")
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE , related_name='player')
     sport = models.ManyToManyField(Sport)    
+
+    def __str__(self):
+        return self.first_name + " "+ self.last_name
+
     
 
 class SkillRating(models.Model):
