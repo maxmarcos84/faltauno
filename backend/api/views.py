@@ -10,9 +10,35 @@ from django.core.mail import EmailMessage
 from .models import *
 import os
 
+
 from django.contrib.auth import get_user_model
 User = get_user_model()
-        
+
+##Prueba para ver si funciona la obtencion de datos del usuario al mismo tiempo que obtengo
+##los tokens de validacion en el frontend
+ 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        # Agrega aquí la información del usuario
+        data.update({'user': {
+            'id': self.user.id,
+            'username': self.user.username,
+            'email': self.user.email,
+            # Agrega más campos si es necesario
+        }})
+
+        return data
+    
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+##Final prueba
+
 class CreateUserView(generics.CreateAPIView):    
     #queryset = User.objects.all()
     serializer_class = CustomUserSerializer 
@@ -98,9 +124,10 @@ class UpdatePlayerView(generics.UpdateAPIView):
 
 class SkillsRatingCreateView(generics.CreateAPIView):
     serializer_class = SkillRatingSerializer
+    queryset = SkillRating.objects.all()
     #permission_classes = [IsAuthenticated]
     permission_classes = [AllowAny] #Habilitado para pruebas
-    pass
+    
 
 class SkillRatingUpdateView(generics.UpdateAPIView):
     serializer_class = SkillRatingSerializer
