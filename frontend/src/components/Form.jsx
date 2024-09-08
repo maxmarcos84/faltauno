@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN, USER_ID } from "../constants";
 import "../styles/Form.css";
+
+//Lo nuevo
+import { PlayerContext } from "../PlayerContext";
+//
 
 function Form({ route, method }) {
   //route es la ruta a donde nos redirige una vez que enviamos el form
@@ -12,6 +16,9 @@ function Form({ route, method }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  //nuevo
+  const { setPlayer } = useContext(PlayerContext);  // Accedemos al contexto
+//
   const name = method === "login" ? "Login" : "Register";
 
   const handleSubmit = async (e) => {
@@ -25,11 +32,16 @@ function Form({ route, method }) {
         localStorage.setItem(ACCESS_TOKEN, resp.data.access);
         localStorage.setItem(REFRESH_TOKEN, resp.data.refresh);
         localStorage.setItem(USER_ID, resp.data.user.id);
+        setPlayer(null);
         
-        console.log("id usuario: "+ localStorage.getItem('user_id'));
-        console.log(localStorage.getItem('access'))
-
-        navigate("/");
+        const { data } = await api.get(`api/players/`+resp.data.user.id);
+        if (data) {
+          console.log(data);
+          setPlayer(data);
+          navigate('/player_home'); // Redirigir a la página del jugador            
+        } else {
+          navigate('/create_player'); // Redirigir a la página del jugador
+        }       
       } else { 
         navigate("/login");
       }

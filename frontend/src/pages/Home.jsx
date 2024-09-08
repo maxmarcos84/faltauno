@@ -1,27 +1,36 @@
-import { Component, useState } from "react"
+import { Component, useState, useEffect, useContext } from "react"
+import { useNavigate } from 'react-router-dom';
+import { PlayerContext } from "../PlayerContext";
 import api from "../api"
-import FormPlayer from "../components/FormPlayer"
 
 function Home() {
 
-    const[player, setPlayer] = useState('');
+    
+    const navigate = useNavigate(); // Hook para redirigir
 
-    //aca tengo que chequear si el usuario tiene player, si tiene cargo los datos del player aca mismo en home
-    //si no tiene tengo que redirigir a la pagina que carga el formulario para crear el player
+    useEffect(() => {
+      // Llamamos a la función getPlayer al montar el componente
+      getPlayer(navigate);
+    }, [navigate]);
 
-    const getPlayer = () =>{
-        let user_id = localStorage.getItem('user_id')
-        api.get("api/players/"+ user_id)
-        .then((res) => res.data)
-        .then((data)=>{
+    const getPlayer = async (navigate) => {
+        try {      
+          // Verificar si la respuesta tiene contenido
+          if (data) {
             setPlayer(data);
-        })
-        .catch((err)=> alert(err));
-    }
+            console.log(34)
+            navigate('/player_home'); // Redirigir a la página del jugador            
+          } else {
+            navigate('/create_player'); // Redirigir a la página del jugador
+          }
+        } catch (err) {
+          alert(`Error: ${err.message}`);
+        }
+      };
+      
     return (
         <>
-        <div>Home</div>
-        <FormPlayer></FormPlayer>
+        <div>Verificando...</div>
         </>    
     )
 }
