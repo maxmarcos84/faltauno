@@ -6,7 +6,8 @@ from .views import (
     getSportsView, 
     GetSkillsBySport,
     SkillsRatingCreateView,
-    SkillRatingUpdateView)
+    SkillRatingUpdateView,
+    GetSkillsByUser)
 
 urlpatterns = [
     path('player/', CreatePlayerView.as_view(), name='create_player'),
@@ -15,6 +16,6 @@ urlpatterns = [
     path('sports/', getSportsView.as_view(), name='get_sports'),
     path('skills/<int:sport_id>', GetSkillsBySport.as_view(), name='get_skills'),
     path('skill_rating_create/', SkillsRatingCreateView.as_view(), name='rating_skill_create'),
-    path('skill_rating_update/<pk>/', SkillRatingUpdateView.as_view(), name='rating_skill_update')
-
+    path('skill_rating_update/<pk>/', SkillRatingUpdateView.as_view(), name='rating_skill_update'),
+    path('player_skills/<int:player_id>/', GetSkillsByUser.as_view(), name='get_player_skills')
 ]

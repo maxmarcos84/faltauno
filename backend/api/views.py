@@ -172,5 +172,13 @@ class GetSkillsBySport(generics.ListAPIView):
 
     def get_queryset(self):
         return Skill.objects.filter(sport = self.kwargs['sport_id'])
+    
+class GetSkillsByUser(generics.ListAPIView):
+    serializer_class = SkillRatingSerializer
+    ##permission_classes  = [IsAuthenticated]
+    permission_classes = [AllowAny] #Habilitado para pruebas
+
+    def get_queryset(self):
+        return SkillRating.objects.filter(player = self.kwargs['player_id'])
 
 

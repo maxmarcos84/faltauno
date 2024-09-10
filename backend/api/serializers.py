@@ -67,7 +67,9 @@ class SkillRatingSerializer(serializers.ModelSerializer):
     
 
 class PlayerSerializer(serializers.ModelSerializer):
-    #user = CustomUserSerializer()
+    sport = SportSerializer(many=True, read_only=True)
+    #al agregar esto, cuando hago un get del player me devuelve tambien toda la informacion del deporte
+    #asi no tengo que hacer otro endpoint para consultar el deporte asociado al player. Beautiful
 
     class Meta:
         model = Player
