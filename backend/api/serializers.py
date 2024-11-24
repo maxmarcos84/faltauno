@@ -57,14 +57,17 @@ class SkillSerializer(serializers.ModelSerializer):
         #extra_kwargs = {'sport': {'write_only': True}}
 
 class SkillRatingSerializer(serializers.ModelSerializer):
+    skill_name = serializers.SerializerMethodField()
     class Meta:
         model = SkillRating
-        fields = ['id', 'player', 'skill', 'like_count', 'dislike_count', 'like', 'dislike']
+        fields = ['id', 'player', 'skill', 'skill_name', 'like_count', 'dislike_count', 'like', 'dislike']
         extra_kwargs = {
             'like_count' : {'read_only' : True},
             'dislike_count' : {'read_only' : True}
         }
-    
+        
+    def get_skill_name(self, obj):
+        return obj.skill.name  # Accede al nombre de la skill
 
 class PlayerSerializer(serializers.ModelSerializer):
     sport = SportSerializer(many=True, read_only=True)
